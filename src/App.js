@@ -1,53 +1,149 @@
-import React from "react";
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4maps from "@amcharts/amcharts4/maps";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
-import "./App.css";
+import React, { useEffect, useState } from 'react';
+import { Container, Col, Row } from 'react-bootstrap';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 
-am4core.useTheme(am4themes_animated);
+import getBrazilData from './utils/Api';
+import Card from './components/card/Card';
+import Loading from './components/loading/Loading';
 
-class App extends React.Component {
-  componentDidMount() {
-    let chart = am4core.create("chartdiv", am4maps.MapChart);
+const App = () => {
+  const [data, setData] = useState();
 
-    // Set map definition
-    chart.geodata = am4geodata_worldLow;
-
-    // Set projection
-    chart.projection = new am4maps.projections.Miller();
-
-    // Create map polygon series
-    var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
-
-    // Make map load polygon (like country names) data from GeoJSON
-    polygonSeries.useGeodata = true;
-
-    // Configure series
-    var polygonTemplate = polygonSeries.mapPolygons.template;
-    polygonTemplate.tooltipText = "{name}";
-    polygonTemplate.fill = am4core.color("#74B266");
-
-    // Create hover state and set alternative fill color
-    var hs = polygonTemplate.states.create("hover");
-    hs.properties.fill = am4core.color("#367B25");
-
-    this.chart = chart;
-  }
-
-  componentWillUnmount() {
-    if (this.chart) {
-      this.chart.dispose();
+  const chartPieOptions = {
+    legend: {
+      labels: {
+        fontColor: '#eee'
+      }
     }
-  }
+  };
 
-  render() {
-    return (
-      <div className="App">
-          <div id="chartdiv" />
-      </div>
-    );
-  }
-}
+  const chartLineOptions = {
+    ...chartPieOptions,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            fontColor: '#eee',
+            callback: function(value, index, values) {
+              return value / 1e6 + 'M';
+            }
+          }
+        }
+      ],
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            fontColor: '#eee'
+          }
+        }
+      ]
+    }
+  };
+
+  useEffect(() => {
+    getBrazilData(json => json && setData(json.data));
+  }, []);
+
+  if (!data) return <Loading />;
+
+  return (
+    <Container>
+      <Row className="page-top-cards">
+        <Col xs="6" md="3">
+          <Card title={'Total de casos'} value={data.contotal || 0} />
+        </Col>
+        <Col xs="6" md="3">
+          <Card title={'Total curados'} value={data.curetotal || 0} />
+        </Col>
+        <Col xs="6" md="3">
+          <Card title={'Total mortes'} value={data.deathtotal || 0} />
+        </Col>
+        <Col xs="6" md="3">
+          <Card
+            title={'Novos casos'}
+            value={(data.adddaily && data.adddaily.conadd) || '+0'}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col lg="6">
+          <Bar
+            options={chartLineOptions}
+            data={{
+              labels: ['População', 'Casos', 'Mortes'],
+              datasets: [
+                {
+                  label: 'População vs Casos vs Mortes',
+                  data: [data.population, data.contotal, data.deathtotal],
+                  backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(235, 235, 62, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
+                  ],
+                  borderColor: 'rgba(200, 200, 200, 0.6)'
+                }
+              ]
+            }}
+          />
+        </Col>
+        <Col lg="6">
+          <Pie
+            options={chartPieOptions}
+            data={{
+              labels: ['Casos', 'Curas', 'Mortes'],
+              datasets: [
+                {
+                  label: 'Distribuição do Corona',
+                  data: [data.contotal, data.curetotal, data.deathtotal],
+                  backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(75, 235, 162, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
+                  ],
+                  borderColor: 'rgba(200, 200, 200, 0.6)'
+                }
+              ]
+            }}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Line
+            options={chartLineOptions}
+            data={{
+              labels:
+                data &&
+                data.historylist &&
+                data.historylist
+                  .map(
+                    history =>
+                      `${history.date.split('.')[1]}/${
+                        history.date.split('.')[0]
+                      }`
+                  )
+                  .reverse(),
+              datasets: [
+                {
+                  label: 'Quantidade de casos',
+                  data:
+                    data &&
+                    data.historylist &&
+                    data.historylist
+                      .map(history => parseInt(history.conNum))
+                      .reverse(),
+                  backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                  borderColor: 'rgba(200, 200, 200, 0.6)',
+                  pointBorderColor: 'rgba(255, 255, 255, 0.8)'
+                }
+              ]
+            }}
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
 export default App;
