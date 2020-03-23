@@ -23,8 +23,29 @@ const App = () => {
       yAxes: [
         {
           ticks: {
+            fontColor: '#eee'
+          }
+        }
+      ],
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            fontColor: '#eee'
+          }
+        }
+      ]
+    }
+  };
+
+  const chartBarOptions = {
+    ...chartPieOptions,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
             fontColor: '#eee',
-            callback: function(value, index, values) {
+            callback: function(value) {
               return value / 1e6 + 'M';
             }
           }
@@ -69,7 +90,7 @@ const App = () => {
       <Row>
         <Col lg="6">
           <Bar
-            options={chartLineOptions}
+            options={chartBarOptions}
             data={{
               labels: ['População', 'Casos', 'Mortes'],
               datasets: [
@@ -134,6 +155,30 @@ const App = () => {
                       .map(history => parseInt(history.conNum))
                       .reverse(),
                   backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                  borderColor: 'rgba(200, 200, 200, 0.6)',
+                  pointBorderColor: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                  label: 'Quantidade de mortes',
+                  data:
+                    data &&
+                    data.historylist &&
+                    data.historylist
+                      .map(history => parseInt(history.deathNum))
+                      .reverse(),
+                  backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                  borderColor: 'rgba(200, 200, 200, 0.6)',
+                  pointBorderColor: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                  label: 'Quantidade de curas',
+                  data:
+                    data &&
+                    data.historylist &&
+                    data.historylist
+                      .map(history => parseInt(history.cureNum))
+                      .reverse(),
+                  backgroundColor: 'rgba(75, 235, 162, 0.8)',
                   borderColor: 'rgba(200, 200, 200, 0.6)',
                   pointBorderColor: 'rgba(255, 255, 255, 0.8)'
                 }
