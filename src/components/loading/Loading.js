@@ -6,14 +6,14 @@ const Loading = () => {
     return (
         <Container>
             <Row>
-                <Col><Skeleton className="skeleton" height="97px" /></Col>
-                <Col><Skeleton className="skeleton" height="97px" /></Col>
-                <Col><Skeleton className="skeleton" height="97px" /></Col>
-                <Col><Skeleton className="skeleton" height="97px" /></Col>
+                <Col xs="6" md="3"><Skeleton className="skeleton" height="97px" /></Col>
+                <Col xs="6" md="3"><Skeleton className="skeleton" height="97px" /></Col>
+                <Col xs="6" md="3"><Skeleton className="skeleton" height="97px" /></Col>
+                <Col xs="6" md="3"><Skeleton className="skeleton" height="97px" /></Col>
             </Row>
             <Row>
-                <Col><Skeleton className="skeleton" height="270px" /></Col>
-                <Col><Skeleton className="skeleton" height="270px" circle /></Col>
+                <Col lg="6"><Skeleton className="skeleton" height="270px" /></Col>
+                <Col lg="6"><Skeleton className="skeleton" height="270px" circle /></Col>
             </Row>
             <Row>
                 <Col><Skeleton className="skeleton" height="530px" /></Col>
