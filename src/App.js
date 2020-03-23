@@ -72,19 +72,19 @@ const App = () => {
     <Container>
       <Row className="page-top-cards">
         <Col xs="6" md="3">
-          <Card title={'Total de casos'} value={data.contotal || 0} />
+          <Card
+            title={'Novos casos'}
+            value={(data.adddaily && data.adddaily.conadd) || '+0'}
+          />
         </Col>
         <Col xs="6" md="3">
-          <Card title={'Total curados'} value={data.curetotal || 0} />
+          <Card title={'Total de casos'} value={data.contotal || 0} />
         </Col>
         <Col xs="6" md="3">
           <Card title={'Total mortes'} value={data.deathtotal || 0} />
         </Col>
         <Col xs="6" md="3">
-          <Card
-            title={'Novos casos'}
-            value={(data.adddaily && data.adddaily.conadd) || '+0'}
-          />
+          <Card title={'Total curados'} value={data.curetotal || 0} />
         </Col>
       </Row>
       <Row>
