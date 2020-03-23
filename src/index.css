@@ -16,7 +16,7 @@ canvas {
 }
 
 #root span.skeleton {
-  margin: 10px auto;
+  margin: 20px auto;
   background-color: #555;
   background-image: linear-gradient(90deg, #565656, #595959, #565656);
 }

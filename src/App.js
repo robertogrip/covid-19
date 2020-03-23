@@ -92,15 +92,16 @@ const App = () => {
           <Bar
             options={chartBarOptions}
             data={{
-              labels: ['População', 'Casos', 'Mortes'],
+              labels: ['População', 'Casos', 'Mortes', 'Curados'],
               datasets: [
                 {
-                  label: 'População vs Casos vs Mortes',
-                  data: [data.population, data.contotal, data.deathtotal],
+                  label: 'População vs Casos vs Mortes vs Curados',
+                  data: [data.population, data.contotal, data.deathtotal, data.curetotal],
                   backgroundColor: [
                     'rgba(54, 162, 235, 0.8)',
                     'rgba(235, 235, 62, 0.8)',
-                    'rgba(255, 99, 132, 0.8)'
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(75, 235, 162, 0.8)'
                   ],
                   borderColor: 'rgba(200, 200, 200, 0.6)'
                 }
@@ -112,15 +113,15 @@ const App = () => {
           <Pie
             options={chartPieOptions}
             data={{
-              labels: ['Casos', 'Curas', 'Mortes'],
+              labels: ['Casos', 'Mortes', 'Curados'],
               datasets: [
                 {
                   label: 'Distribuição do Corona',
-                  data: [data.contotal, data.curetotal, data.deathtotal],
+                  data: [data.contotal, data.deathtotal, data.curetotal],
                   backgroundColor: [
                     'rgba(54, 162, 235, 0.8)',
-                    'rgba(75, 235, 162, 0.8)',
-                    'rgba(255, 99, 132, 0.8)'
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(75, 235, 162, 0.8)'
                   ],
                   borderColor: 'rgba(200, 200, 200, 0.6)'
                 }
@@ -147,7 +148,7 @@ const App = () => {
                   .reverse(),
               datasets: [
                 {
-                  label: 'Quantidade de casos',
+                  label: 'Número de casos',
                   data:
                     data &&
                     data.historylist &&
@@ -159,7 +160,7 @@ const App = () => {
                   pointBorderColor: 'rgba(255, 255, 255, 0.8)'
                 },
                 {
-                  label: 'Quantidade de mortes',
+                  label: 'Número de mortes',
                   data:
                     data &&
                     data.historylist &&
@@ -171,7 +172,7 @@ const App = () => {
                   pointBorderColor: 'rgba(255, 255, 255, 0.8)'
                 },
                 {
-                  label: 'Quantidade de curas',
+                  label: 'Número de curados',
                   data:
                     data &&
                     data.historylist &&
