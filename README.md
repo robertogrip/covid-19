@@ -1,10 +1,12 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b7ddadc5-100b-4a67-8cd6-1511f2ab60f0/deploy-status)](https://app.netlify.com/sites/covid-19-brasil/deploys)
 
+Project running on [https://covid-19-brasil.netlify.com](covid-19-brasil)
+
 # Project with real-time information about Covid-19
 
 Clone this project
 
-### `git clone ${projectSsh}`
+### `git clone`
 
 Install dependencies
 
