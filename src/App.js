@@ -95,13 +95,8 @@ const App = () => {
               labels: ['População', 'Casos', 'Mortes', 'Curados'],
               datasets: [
                 {
-                  label: ['População', 'Casos', 'Mortes', 'Curados'],
-                  data: [
-                    data.population,
-                    data.contotal,
-                    data.deathtotal,
-                    data.curetotal
-                  ],
+                  label: 'População vs Casos vs Mortes vs Curados',
+                  data: [data.population, data.contotal, data.deathtotal, data.curetotal],
                   backgroundColor: [
                     'rgba(54, 162, 235, 0.8)',
                     'rgba(235, 235, 62, 0.8)',
